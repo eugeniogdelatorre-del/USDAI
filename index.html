@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BSC Wallet Trading Analysis — 0xa593d6e617e3d7165a1cbdc93c9ea3e55bbee85c">
+<title>Wallet Analysis — 0xa593d6...ee85c</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0f1117;color:#e8eaf0;min-height:100vh;padding:2rem 1.5rem;}
+h1{font-size:18px;font-weight:500;color:#e8eaf0;margin-bottom:3px;}
+.subtitle{font-size:12px;color:#6b7280;margin-bottom:1.5rem;}
+.badge-complete{display:inline-flex;align-items:center;gap:6px;background:#0d2318;border:0.5px solid #1D9E75;border-radius:6px;padding:6px 12px;margin-bottom:1.5rem;font-size:12px;color:#4ade80;font-weight:500;}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1.5rem;}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;}
+@media(max-width:800px){.grid5{grid-template-columns:repeat(2,1fr);}.grid4{grid-template-columns:repeat(2,1fr);}.grid2{grid-template-columns:1fr;}}
+@media(max-width:480px){.grid5{grid-template-columns:1fr 1fr;}}
+.sc{background:#1c1f2b;border-radius:8px;padding:1rem;}
+.sc.green{background:#0d2318;}.sc.red{background:#200f0f;}
+.sl{font-size:10px;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;color:#6b7280;}
+.sc.green .sl{color:#4ade80;}.sc.red .sl{color:#f87171;}
+.sv{font-size:20px;font-weight:600;color:#e8eaf0;line-height:1.2;}
+.sc.green .sv{color:#4ade80;}.sc.red .sv{color:#f87171;}
+.ss{font-size:11px;color:#6b7280;margin-top:4px;line-height:1.4;}
+.sc.green .ss{color:#86efac;}.sc.red .ss{color:#fca5a5;}
+.tabs{display:flex;gap:0;border-bottom:1px solid #2a2d3a;margin-bottom:1.5rem;flex-wrap:wrap;}
+.tab-btn{background:none;border:none;border-bottom:2px solid transparent;padding:9px 15px;font-size:13px;cursor:pointer;color:#6b7280;transition:color .15s;}
+.tab-btn:hover{color:#c9ccd6;}
+.tab-btn.active{border-bottom:2px solid #e8eaf0;color:#e8eaf0;font-weight:500;}
+.tab-content{display:none;animation:fadeIn .15s ease;}
+.tab-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.card{background:#1c1f2b;border:0.5px solid #2a2d3a;border-radius:12px;padding:1.25rem;margin-bottom:1rem;}
+.card-title{font-size:13px;font-weight:500;margin-bottom:16px;color:#c9ccd6;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-label{font-size:12px;width:95px;flex-shrink:0;color:#9ca3af;}
+.bar-track{flex:1;height:32px;background:#12141c;border-radius:4px;overflow:hidden;min-width:0;}
+.bar-fill{height:100%;display:flex;align-items:center;padding-left:10px;transition:width .3s ease;}
+.bar-fill span{font-size:12px;font-weight:500;white-space:nowrap;}
+.bar-pct{font-size:12px;color:#6b7280;width:44px;text-align:right;flex-shrink:0;}
+.stacked{display:flex;height:28px;border-radius:4px;overflow:hidden;gap:2px;margin-bottom:10px;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;}
+.legend span{font-size:11px;display:flex;align-items:center;gap:5px;color:#9ca3af;}
+.dot{width:10px;height:10px;border-radius:2px;display:inline-block;flex-shrink:0;}
+.tbl-wrap{background:#1c1f2b;border:0.5px solid #2a2d3a;border-radius:12px;overflow:hidden;margin-bottom:1rem;}
+.tbl-head{display:grid;padding:8px 12px;font-size:11px;color:#6b7280;font-weight:600;background:#161820;border-bottom:1px solid #2a2d3a;}
+.trow{display:grid;padding:9px 12px;border-bottom:1px solid #1e2130;font-size:12px;align-items:center;transition:background .1s;}
+.trow:last-child{border-bottom:none;}
+.trow:hover{background:#1e2130;}
+.addr{font-family:'Courier New',monospace;font-size:11px;color:#6b7280;}
+.addr-full{display:none;}
+.router-tag{font-size:10px;padding:1px 6px;border-radius:3px;background:#2a2200;color:#facc15;margin-left:6px;}
+.note{background:#1c1f2b;border-radius:8px;padding:10px 14px;font-size:12px;color:#9ca3af;line-height:1.6;margin-top:4px;}
+.note strong{color:#e8eaf0;font-weight:500;}
+footer{margin-top:2rem;padding-top:1rem;border-top:1px solid #1e2130;font-size:11px;color:#4b5563;text-align:center;}
+</style>
+</head>
+<body>
+
+<h1>Wallet Trading Analysis</h1>
+<p class="subtitle">0xa593d6e617e3d7165a1cbdc93c9ea3e55bbee85c &nbsp;·&nbsp; BSC &nbsp;·&nbsp; Mar 4–15 2026</p>
+
+<div class="badge-complete">&#10003; Complete dataset &nbsp;·&nbsp; 30 exports &nbsp;·&nbsp; no gaps &nbsp;·&nbsp; Mar 4 09:01 → Mar 15 19:34</div>
+
+<div class="grid5">
+  <div class="sc"><div class="sl">Total volume</div><div class="sv">$1.500M</div><div class="ss">All token transfers</div></div>
+  <div class="sc"><div class="sl">Classified vol</div><div class="sv">$703,633</div><div class="ss">Buy · Sell · Short</div></div>
+  <div class="sc"><div class="sl">Total TXs</div><div class="sv">36,824</div><div class="ss">Deduplicated</div></div>
+  <div class="sc"><div class="sl">Unique wallets</div><div class="sv">447</div><div class="ss">Counterparties</div></div>
+  <div class="sc"><div class="sl">Net position</div><div class="sv">+$11,248</div><div class="ss">In $755K · Out $744K</div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('longshort',this)">Long vs Short</button>
+  <button class="tab-btn" onclick="showTab('daily',this)">Daily volume</button>
+  <button class="tab-btn" onclick="showTab('hourly',this)">Mar 4 hourly</button>
+  <button class="tab-btn" onclick="showTab('topvol',this)">Top 20 by volume</button>
+  <button class="tab-btn" onclick="showTab('toptx',this)">Top 20 by TXs</button>
+</div>
+
+<!-- LONG VS SHORT -->
+<div id="tab-longshort" class="tab-content active">
+  <div class="grid2">
+    <div class="sc green">
+      <div class="sl">Long (Buy + Sell)</div>
+      <div class="sv">$536,344</div>
+      <div class="ss">76.2% of classified · 4,578 TXs · avg $117</div>
+    </div>
+    <div class="sc red">
+      <div class="sl">Short (Open + Close)</div>
+      <div class="sv">$167,289</div>
+      <div class="ss">23.8% of classified · 3,224 TXs · avg $52</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">USD volume by method</div>
+    <div class="bar-row">
+      <span class="bar-label">Buy</span>
+      <div class="bar-track"><div class="bar-fill" style="width:38.5%;background:#1D9E75;"><span style="color:#E1F5EE;">$270,959</span></div></div>
+      <span class="bar-pct">38.5%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Sell</span>
+      <div class="bar-track"><div class="bar-fill" style="width:37.7%;background:#5DCAA5;"><span style="color:#04342C;">$265,385</span></div></div>
+      <span class="bar-pct">37.7%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Open Short</span>
+      <div class="bar-track"><div class="bar-fill" style="width:11.9%;background:#E24B4A;"><span style="color:#FCEBEB;">$84,128</span></div></div>
+      <span class="bar-pct">11.9%</span>
+    </div>
+    <div class="bar-row" style="margin-bottom:0;">
+      <span class="bar-label">Close Short</span>
+      <div class="bar-track"><div class="bar-fill" style="width:11.8%;background:#F09595;"><span style="color:#501313;">$83,161</span></div></div>
+      <span class="bar-pct">11.8%</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Long vs Short — proportion</div>
+    <div class="stacked">
+      <div style="width:38.5%;background:#1D9E75;"></div>
+      <div style="width:37.7%;background:#5DCAA5;"></div>
+      <div style="width:11.9%;background:#E24B4A;"></div>
+      <div style="width:11.8%;background:#F09595;"></div>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:#1D9E75;"></span>Buy 38.5%</span>
+      <span><span class="dot" style="background:#5DCAA5;"></span>Sell 37.7%</span>
+      <span><span class="dot" style="background:#E24B4A;"></span>Open Short 11.9%</span>
+      <span><span class="dot" style="background:#F09595;"></span>Close Short 11.8%</span>
+    </div>
+  </div>
+
+  <div class="grid4">
+    <div class="sc"><div class="sl">Long / Short ratio</div><div class="sv">3.2×</div><div class="ss">$536K vs $167K</div></div>
+    <div class="sc"><div class="sl">Buy vs Sell delta</div><div class="sv">+$5,574</div><div class="ss">Marginal long bias</div></div>
+    <div class="sc"><div class="sl">Short balance</div><div class="sv">+$967</div><div class="ss">Open vs close delta</div></div>
+    <div class="sc"><div class="sl">Avg Buy size</div><div class="sv">$228</div><div class="ss">vs $87 avg per Sell TX</div></div>
+  </div>
+</div>
+
+<!-- DAILY VOLUME -->
+<div id="tab-daily" class="tab-content">
+  <div class="card">
+    <div class="card-title">Daily USD volume — Mar 4–15 2026</div>
+    <div id="dailyBars"></div>
+  </div>
+  <div class="note">Mar 4 total: <strong>$1.376M</strong> — 91.7% of all volume. The remaining 11 days combined: $124K. A single concentrated trading event.</div>
+</div>
+
+<!-- HOURLY MAR 4 -->
+<div id="tab-hourly" class="tab-content">
+  <div class="card">
+    <div class="card-title">Mar 4 intraday volume by hour (UTC) — complete coverage</div>
+    <div id="hourlyBars"></div>
+  </div>
+  <div class="note">Peak at <strong>09:00 UTC ($445K)</strong>. Volume declined each hour — by 16:00 down to $6.6K, by 17:00 effectively stopped. All hours covered, no gaps.</div>
+</div>
+
+<!-- TOP 20 VOLUME -->
+<div id="tab-topvol" class="tab-content">
+  <div style="font-size:12px;color:#6b7280;margin-bottom:10px;">447 unique counterparty wallets. Top 20 by USD volume transacted with this wallet:</div>
+  <div class="tbl-wrap">
+    <div class="tbl-head" style="grid-template-columns:28px 3fr 1fr 1fr;">
+      <span>#</span><span>Wallet</span><span style="text-align:right">Volume (USD)</span><span style="text-align:right">Share</span>
+    </div>
+    <div id="volRows"></div>
+  </div>
+  <div class="note">Hover any row to see full wallet address. Top wallet transacted <strong>$53,356</strong> across the period.</div>
+</div>
+
+<!-- TOP 20 TXs -->
+<div id="tab-toptx" class="tab-content">
+  <div style="font-size:12px;color:#6b7280;margin-bottom:10px;">Top 20 wallets by transaction count:</div>
+  <div class="tbl-wrap">
+    <div class="tbl-head" style="grid-template-columns:28px 3fr 1fr 1fr;">
+      <span>#</span><span>Wallet</span><span style="text-align:right">TXs</span><span style="text-align:right">% of total</span>
+    </div>
+    <div id="txRows"></div>
+  </div>
+  <div class="note">The top wallet tagged <span class="router-tag">router</span> is the DEX contract routing trades — not an individual counterparty. It accounts for <strong>34.8%</strong> of all TXs.</div>
+</div>
+
+<footer>
+  Wallet: 0xa593d6e617e3d7165a1cbdc93c9ea3e55bbee85c &nbsp;·&nbsp; BSC &nbsp;·&nbsp; Data: BscScan token transfers &nbsp;·&nbsp; Period: Mar 4–15 2026
+</footer>
+
+<script>
+const daily={"Mar 4":1375803,"Mar 5":49605,"Mar 6":11131,"Mar 7":8573,"Mar 8":8480,"Mar 9":8418,"Mar 10":7417,"Mar 11":7862,"Mar 12":7161,"Mar 13":6718,"Mar 14":9111,"Mar 15":0};
+const hourly={"09:00":445807,"10:00":364484,"11:00":200255,"12:00":125969,"13:00":99846,"14:00":87117,"15:00":26957,"16:00":6647,"17:00":5560,"18:00":2359,"19:00":1925,"20:00":2060,"21:00":2421,"22:00":2470,"23:00":1925};
+const maxD=Math.max(...Object.values(daily));
+const maxH=Math.max(...Object.values(hourly));
+const fmtUSD=n=>n>=1000000?'$'+(n/1000000).toFixed(2)+'M':n>=1000?'$'+(n/1000).toFixed(0)+'K':'$'+n.toLocaleString();
+
+Object.entries(daily).forEach(([day,usd])=>{
+  const pct=Math.max(usd/maxD*100,0.3).toFixed(1);
+  const el=document.createElement('div');
+  el.style.cssText='display:flex;align-items:center;gap:10px;margin-bottom:8px;';
+  const col=usd>500000?'#1D9E75':usd>20000?'#5DCAA5':'#9FE1CB';
+  el.innerHTML=`<span style="font-size:12px;width:46px;color:#9ca3af;flex-shrink:0;">${day}</span><div style="flex:1;height:22px;background:#12141c;border-radius:4px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${col};display:flex;align-items:center;padding-left:8px;">${usd>8000?`<span style="font-size:11px;color:#04342C;font-weight:500;">${fmtUSD(usd)}</span>`:''}</div></div>${usd<=8000?`<span style="font-size:11px;color:#6b7280;">${fmtUSD(usd)}</span>`:''}`;
+  document.getElementById('dailyBars').appendChild(el);
+});
+
+Object.entries(hourly).forEach(([hr,usd])=>{
+  const pct=Math.max(usd/maxH*100,0.5).toFixed(1);
+  const isLow=usd<10000;
+  const col=usd>200000?'#1D9E75':usd>50000?'#5DCAA5':'#9FE1CB';
+  const el=document.createElement('div');
+  el.style.cssText='display:flex;align-items:center;gap:10px;margin-bottom:8px;';
+  el.innerHTML=`<span style="font-size:12px;width:54px;color:#9ca3af;flex-shrink:0;">${hr}</span><div style="flex:1;height:24px;background:#12141c;border-radius:4px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${col};display:flex;align-items:center;padding-left:8px;">${!isLow?`<span style="font-size:11px;color:#04342C;font-weight:500;">${fmtUSD(usd)}</span>`:''}</div></div>${isLow?`<span style="font-size:11px;color:#6b7280;">${fmtUSD(usd)}</span>`:''}`;
+  document.getElementById('hourlyBars').appendChild(el);
+});
+
+const top20vol=[["0x6448f4ad7a6577e66350e82798b9804a15949862",53356],["0xb3488911daf32886113a3e4294ba6b41c90a7cb9",50762],["0xc69498f2b04eee9071a5656950d80540c84b611f",49952],["0x56a0165674467fd3c1a200745a71d27de0325efe",48616],["0xaea8609c63a4e9602a743c793431f6b369cde47c",46794],["0x76e4259c86c4ad63fc72bee66f8569a8ae3bdc0d",45435],["0xd48140f9b0e58d717f7f66ba86f77a620821cd6d",45431],["0x505f98cd2fcfad9f07c67cca4cb33b99d177af3a",44491],["0x3d641ca6d1e3638ce42ba26f3a9e094af1ce55c9",42223],["0x393c459f540598cb00fc233cf0e34e336ca76d39",40877],["0xf04080f8537ea9b974fe917af42220ded298e645",40761],["0x1c1e995920a208733d64d102cb15841345677047",40535],["0x2d99531f4a0571d60680359d0427dcc1bc3919b2",38662],["0xba5ca6cb8534266d1e99d6f49b7223d22d79adbb",37506],["0x6123c970e5ff19b4345c12e5562cb7bfe220f9c2",36637],["0x2f30a8901cce374056140ade393234242db68197",36073],["0x597f35cb4876f8600df4d6d8c380f05d11320b61",32736],["0x5fa72ef50a4f38a22838661c479518d18349a7be",32670],["0x148e253472647f62f16bf04ac0ac67be81795e7e",31816],["0x0e0dadbf8dfa606adf37de88fa4efb881a0dd270",31457]];
+const top20tx=[["0x38799ce388a9b65ec6ba7a47c1efb9cf1a7068e4",12826,true],["0x3d641ca6d1e3638ce42ba26f3a9e094af1ce55c9",538,false],["0x0e0dadbf8dfa606adf37de88fa4efb881a0dd270",506,false],["0x8b1fcb9a8aa1774fb0a9711a80783e4a51554cd4",410,false],["0xb3488911daf32886113a3e4294ba6b41c90a7cb9",346,false],["0xc69498f2b04eee9071a5656950d80540c84b611f",339,false],["0x6448f4ad7a6577e66350e82798b9804a15949862",337,false],["0x76e4259c86c4ad63fc72bee66f8569a8ae3bdc0d",335,false],["0xf04080f8537ea9b974fe917af42220ded298e645",335,false],["0x505f98cd2fcfad9f07c67cca4cb33b99d177af3a",323,false],["0xd48140f9b0e58d717f7f66ba86f77a620821cd6d",320,false],["0xaea8609c63a4e9602a743c793431f6b369cde47c",309,false],["0x56a0165674467fd3c1a200745a71d27de0325efe",304,false],["0x6123c970e5ff19b4345c12e5562cb7bfe220f9c2",297,false],["0x62a1324cbe32059d8767d4ec807422d45bab213c",293,false],["0xba5ca6cb8534266d1e99d6f49b7223d22d79adbb",286,false],["0x597f35cb4876f8600df4d6d8c380f05d11320b61",282,false],["0x2d99531f4a0571d60680359d0427dcc1bc3919b2",281,false],["0x5fa72ef50a4f38a22838661c479518d18349a7be",277,false],["0xae1cab5c9a258a3f55130dfb07b4a924f40f2778",270,false]];
+
+const totalVol=1500278,totalTx=36824;
+function shortAddr(a){return a.slice(0,6)+'...'+a.slice(-4);}
+
+top20vol.forEach(([addr,usd],i)=>{
+  const r=document.createElement('div');
+  r.className='trow';r.style.gridTemplateColumns='28px 3fr 1fr 1fr';r.title=addr;
+  r.innerHTML=`<span style="color:#4b5563;font-size:11px;">${i+1}</span><span class="addr">${shortAddr(addr)}</span><span style="text-align:right;font-weight:500;">$${usd.toLocaleString()}</span><span style="text-align:right;color:#6b7280;">${(usd/totalVol*100).toFixed(1)}%</span>`;
+  document.getElementById('volRows').appendChild(r);
+});
+
+top20tx.forEach(([addr,count,isRouter],i)=>{
+  const r=document.createElement('div');
+  r.className='trow';r.style.gridTemplateColumns='28px 3fr 1fr 1fr';r.title=addr;
+  r.innerHTML=`<span style="color:#4b5563;font-size:11px;">${i+1}</span><span class="addr">${shortAddr(addr)}${isRouter?'<span class="router-tag">router</span>':''}</span><span style="text-align:right;font-weight:500;">${count.toLocaleString()}</span><span style="text-align:right;color:#6b7280;">${(count/totalTx*100).toFixed(1)}%</span>`;
+  document.getElementById('txRows').appendChild(r);
+});
+
+function showTab(name,btn){
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
