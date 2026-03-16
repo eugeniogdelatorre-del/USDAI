@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallet Analysis — 0xa593d6...ee85c</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root {
+  --bg:       #080b10;
+  --bg2:      #0d1117;
+  --bg3:      #131820;
+  --bg4:      #1a2030;
+  --border:   #1e2840;
+  --border2:  #253050;
+  --text:     #c8d4e8;
+  --text2:    #7a8aaa;
+  --text3:    #4a5570;
+  --green:    #22c97a;
+  --green2:   #0d9e55;
+  --green3:   #07301a;
+  --red:      #e84040;
+  --red2:     #b02020;
+  --red3:     #2d0808;
+  --amber:    #f0a020;
+  --amber2:   #b07010;
+  --amber3:   #2a1800;
+  --blue:     #4a8fff;
+  --blue2:    #2a5fcc;
+  --blue3:    #0a1a3a;
+  --purple:   #9a60f0;
+  --teal:     #20c8c0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 1.5rem;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.header-left h1 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.header-left .sub {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+.badge-yellow { background: var(--amber3); color: var(--amber); border: 1px solid var(--amber2); }
+.badge-blue   { background: var(--blue3);  color: var(--blue);  border: 1px solid var(--blue2);  }
+.badge-note   { background: var(--bg3);    color: var(--text3); border: 1px solid var(--border); }
+
+/* ── KPI GRID ── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+@media(max-width:800px){ .kpi-grid{grid-template-columns:repeat(3,1fr);} }
+@media(max-width:500px){ .kpi-grid{grid-template-columns:repeat(2,1fr);} }
+
+.kpi {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent, var(--border2));
+}
+.kpi.g::before { --accent: var(--green2); }
+.kpi.r::before { --accent: var(--red2); }
+.kpi.a::before { --accent: var(--amber2); }
+.kpi.b::before { --accent: var(--blue2); }
+
+.kpi-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+.kpi-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.kpi.g .kpi-value { color: var(--green); }
+.kpi.r .kpi-value { color: var(--red); }
+.kpi.a .kpi-value { color: var(--amber); }
+.kpi-sub { font-size: 10px; color: var(--text3); }
+
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  cursor: pointer;
+  color: var(--text3);
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  letter-spacing: 0.03em;
+}
+.tab-btn:hover { color: var(--text2); }
+.tab-btn.active {
+  border-bottom-color: var(--blue);
+  color: var(--text);
+  font-weight: 500;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+.card-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: 1rem;
+}
+
+/* ── GRIDS ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem; }
+.g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 1rem; }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+@media(max-width:700px){ .g2{grid-template-columns:1fr;} .g3{grid-template-columns:1fr 1fr;} .g4{grid-template-columns:1fr 1fr;} }
+
+.stat-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+.stat-card.g  { background: var(--green3); border-color: var(--green2); }
+.stat-card.r  { background: var(--red3);   border-color: var(--red2);   }
+.stat-card.a  { background: var(--amber3); border-color: var(--amber2); }
+.stat-card.b  { background: var(--blue3);  border-color: var(--blue2);  }
+
+.stat-label { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text3); margin-bottom:5px; }
+.stat-card.g .stat-label { color: var(--green2); }
+.stat-card.r .stat-label { color: var(--red2); }
+.stat-card.a .stat-label { color: var(--amber2); }
+.stat-card.b .stat-label { color: var(--blue2); }
+
+.stat-value { font-family:'IBM Plex Mono',monospace; font-size:18px; font-weight:600; color:var(--text); line-height:1; margin-bottom:4px; }
+.stat-card.g .stat-value { color: var(--green); }
+.stat-card.r .stat-value { color: var(--red); }
+.stat-card.a .stat-value { color: var(--amber); }
+.stat-sub { font-size:10px; color:var(--text3); }
+.stat-card.g .stat-sub { color: #5ae8a0; }
+.stat-card.r .stat-sub { color: #f08080; }
+.stat-card.a .stat-sub { color: #f8d080; }
+
+/* ── BARS ── */
+.bar-wrap { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+.bar-lbl { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text2); width:100px; flex-shrink:0; }
+.bar-track { flex:1; height:30px; background:var(--bg); border-radius:4px; overflow:hidden; position:relative; }
+.bar-fill {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  font-weight:500;
+  border-radius: 4px 0 0 4px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.bar-pct { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text3); width:52px; text-align:right; flex-shrink:0; }
+
+/* ── STACKED BAR ── */
+.stacked { display:flex; height:26px; border-radius:4px; overflow:hidden; gap:2px; margin-bottom:10px; }
+.legend { display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; }
+.legend span { font-size:11px; display:flex; align-items:center; gap:5px; color:var(--text2); font-family:'IBM Plex Mono',monospace; }
+.dot { width:10px; height:10px; border-radius:2px; display:inline-block; flex-shrink:0; }
+
+/* ── TABLE ── */
+.tbl-header, .tbl-row {
+  display: grid;
+  padding: 7px 14px;
+  align-items: center;
+  font-size: 11px;
+}
+.tbl-header {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--text3);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+}
+.tbl-row {
+  border-bottom: 1px solid var(--border);
+  font-family:'IBM Plex Mono',monospace;
+  transition: background 0.1s;
+}
+.tbl-row:last-child { border-bottom: none; }
+.tbl-row:hover { background: var(--bg3); }
+.addr { color: var(--text2); font-size:10px; }
+.router-badge {
+  display:inline-block;
+  font-size:9px;
+  padding:1px 5px;
+  border-radius:2px;
+  background: var(--amber3);
+  color: var(--amber);
+  border: 1px solid var(--amber2);
+  margin-left:6px;
+  letter-spacing:0.05em;
+}
+
+/* ── INSIGHT ── */
+.insight {
+  background: var(--bg3);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text2);
+}
+.insight strong { color: var(--text); font-weight: 500; }
+.insight-tag {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--blue);
+  margin-bottom:5px;
+  font-weight:600;
+}
+
+/* ── NOTE STRIP ── */
+.note {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius:6px;
+  padding:10px 14px;
+  font-size:11px;
+  color:var(--text3);
+  line-height:1.6;
+  margin-bottom:1rem;
+  font-family:'IBM Plex Mono',monospace;
+}
+.note strong { color:var(--text2); }
+
+/* ── SECTION DIVIDER ── */
+.divider { border:none; border-top:1px solid var(--border); margin: 1rem 0; }
+
+/* ── SCROLLABLE TABLE WRAPPER ── */
+.tbl-scroll { max-height: 480px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border2) transparent; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>Wallet Analysis — 0xa593d6e6...ee85c</h1>
+    <div class="sub">BSC · BSC-USD token transfers · Mar 4 – 15 2026</div>
+  </div>
+
+</div>
+
+<!-- KPIs -->
+<div class="kpi-grid">
+  <div class="kpi b">
+    <div class="kpi-label">Total Volume</div>
+    <div class="kpi-value">$1.500M</div>
+    <div class="kpi-sub">Mar 4 – 15 · BSC-USD</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Unique Wallets</div>
+    <div class="kpi-value">447</div>
+    <div class="kpi-sub">counterparties</div>
+  </div>
+  <div class="kpi g">
+    <div class="kpi-label">Net Position</div>
+    <div class="kpi-value">+$11,248</div>
+    <div class="kpi-sub">in $755K · out $744K</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Period</div>
+    <div class="kpi-value">12 days</div>
+    <div class="kpi-sub">Mar 4 → Mar 15</div>
+  </div>
+  <div class="kpi a">
+    <div class="kpi-label">Mar 4 Share</div>
+    <div class="kpi-value">91.7%</div>
+    <div class="kpi-sub">$1.376M of total vol</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('longshort',this)">Long vs Short</button>
+  <button class="tab-btn" onclick="showTab('priceaction',this)">Price Action</button>
+  <button class="tab-btn" onclick="showTab('daily',this)">Daily Volume</button>
+  <button class="tab-btn" onclick="showTab('topvol',this)">Top 20 Volume</button>
+  <button class="tab-btn" onclick="showTab('toptx',this)">Top 20 TXs</button>
+</div>
+
+<!-- ═══ LONG VS SHORT ═══ -->
+<div id="tab-longshort" class="tab-content active">
+
+
+  <div class="g2">
+    <div class="stat-card g">
+      <div class="stat-label">Long (Buy + Sell)</div>
+      <div class="stat-value">$992K</div>
+      <div class="stat-sub">66.1% of total · Buy $498K · Sell $494K</div>
+    </div>
+    <div class="stat-card r">
+      <div class="stat-label">Short (Open + Close)</div>
+      <div class="stat-value">$508K</div>
+      <div class="stat-sub">33.9% of total · Open $257K · Close $252K</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">USD Volume — 4 position types</div>
+    <div style="font-size:9px;font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em;color:var(--text3);text-transform:uppercase;margin-bottom:10px;">Long</div>
+
+    <div class="bar-wrap">
+      <span class="bar-lbl">Buy</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:100%;background:var(--green2);">
+          <span style="color:#a0ffd0;">$498,190</span>
+        </div>
+      </div>
+      <span class="bar-pct">$498K</span>
+    </div>
+    <div class="bar-wrap" style="margin-bottom:16px;">
+      <span class="bar-lbl">Sell</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:99.1%;background:#16855c;">
+          <span style="color:#a0ffd0;">$493,832</span>
+        </div>
+      </div>
+      <span class="bar-pct">$494K</span>
+    </div>
+
+    <div style="font-size:9px;font-family:'IBM Plex Mono',monospace;letter-spacing:0.08em;color:var(--text3);text-transform:uppercase;margin-bottom:10px;">Short</div>
+
+    <div class="bar-wrap">
+      <span class="bar-lbl">Open Short</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:51.5%;background:var(--red2);">
+          <span style="color:#ffd0d0;">$256,508</span>
+        </div>
+      </div>
+      <span class="bar-pct">$257K</span>
+    </div>
+    <div class="bar-wrap">
+      <span class="bar-lbl">Close Short</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:50.6%;background:#7a1515;">
+          <span style="color:#ffd0d0;">$251,749</span>
+        </div>
+      </div>
+      <span class="bar-pct">$252K</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ PRICE ACTION ═══ -->
+<div id="tab-priceaction" class="tab-content">
+  <div class="card">
+    <div class="card-title">Mar 4 activity timeline</div>
+    <div id="timelineBars"></div>
+  </div>
+</div>
+
+<!-- ═══ DAILY VOLUME ═══ -->
+<div id="tab-daily" class="tab-content">
+  <div class="card">
+    <div class="card-title">Daily USD Volume — Mar 4–15 2026</div>
+    <div id="dailyBars"></div>
+  </div>
+  <div class="stat-card a" style="font-size:12px;color:var(--text2);line-height:1.7;">
+    Mar 4 total: <strong style="color:var(--amber);">$1,375,803</strong> — 91.7% of all volume.
+    The remaining 11 days combined: <strong style="color:var(--text);">$124,475</strong> across 5,464 TXs.
+  </div>
+</div>
+
+<!-- ═══ TOP 20 VOLUME ═══ -->
+<div id="tab-topvol" class="tab-content">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);margin-bottom:10px;">
+    447 unique counterparty wallets. Top 20 by USD volume:
+  </div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <div class="tbl-header" style="grid-template-columns:32px 2fr 1fr 1fr 1fr;">#<span>Wallet</span><span style="text-align:right">Volume</span><span style="text-align:right">TXs</span><span style="text-align:right">Share</span></div>
+    <div class="tbl-scroll" id="volRows"></div>
+  </div>
+</div>
+
+<!-- ═══ TOP 20 TXs ═══ -->
+<div id="tab-toptx" class="tab-content">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);margin-bottom:10px;">
+    Top 20 wallets by transaction count:
+  </div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <div class="tbl-header" style="grid-template-columns:32px 2fr 1fr 1fr 1fr;">#<span>Wallet</span><span style="text-align:right">TXs</span><span style="text-align:right">Volume</span><span style="text-align:right">% of TXs</span></div>
+    <div class="tbl-scroll" id="txRows"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const daily = {
+  "Mar 4":1375803,"Mar 5":49605,"Mar 6":11131,"Mar 7":8573,
+  "Mar 8":8480,"Mar 9":8418,"Mar 10":7417,"Mar 11":7862,
+  "Mar 12":7161,"Mar 13":6718,"Mar 14":9111,"Mar 15":0
+};
+const hourly = {
+  "09:00":445807,"10:00":364484,"11:00":200255,"12:00":125969,
+  "13:00":99846,"14:00":87117,"15:00":26957,"16:00":6647,
+  "17:00":5560,"18:00":2359,"19:00":1925,"20:00":2060,
+  "21:00":2421,"22:00":2470,"23:00":1925
+};
+const top20vol = [
+  ["0x6448f4ad7a6577e66350e82798b9804a15949862",53356,337],
+  ["0xb3488911daf32886113a3e4294ba6b41c90a7cb9",50762,346],
+  ["0xc69498f2b04eee9071a5656950d80540c84b611f",49952,339],
+  ["0x56a0165674467fd3c1a200745a71d27de0325efe",48616,304],
+  ["0xaea8609c63a4e9602a743c793431f6b369cde47c",46794,309],
+  ["0x76e4259c86c4ad63fc72bee66f8569a8ae3bdc0d",45435,335],
+  ["0xd48140f9b0e58d717f7f66ba86f77a620821cd6d",45431,320],
+  ["0x505f98cd2fcfad9f07c67cca4cb33b99d177af3a",44491,323],
+  ["0x3d641ca6d1e3638ce42ba26f3a9e094af1ce55c9",42223,538],
+  ["0x393c459f540598cb00fc233cf0e34e336ca76d39",40877,197],
+  ["0xf04080f8537ea9b974fe917af42220ded298e645",40761,335],
+  ["0x1c1e995920a208733d64d102cb15841345677047",40535,182],
+  ["0x2d99531f4a0571d60680359d0427dcc1bc3919b2",38662,281],
+  ["0xba5ca6cb8534266d1e99d6f49b7223d22d79adbb",37506,286],
+  ["0x6123c970e5ff19b4345c12e5562cb7bfe220f9c2",36637,297],
+  ["0x2f30a8901cce374056140ade393234242db68197",36073,192],
+  ["0x597f35cb4876f8600df4d6d8c380f05d11320b61",32736,282],
+  ["0x5fa72ef50a4f38a22838661c479518d18349a7be",32670,277],
+  ["0x148e253472647f62f16bf04ac0ac67be81795e7e",31816,269],
+  ["0x0e0dadbf8dfa606adf37de88fa4efb881a0dd270",31457,506],
+];
+const top20tx = [
+  ["0x38799ce388a9b65ec6ba7a47c1efb9cf1a7068e4",12826,18628,true],
+  ["0x3d641ca6d1e3638ce42ba26f3a9e094af1ce55c9",538,42223,false],
+  ["0x0e0dadbf8dfa606adf37de88fa4efb881a0dd270",506,31457,false],
+  ["0x8b1fcb9a8aa1774fb0a9711a80783e4a51554cd4",410,13361,false],
+  ["0xb3488911daf32886113a3e4294ba6b41c90a7cb9",346,50762,false],
+  ["0xc69498f2b04eee9071a5656950d80540c84b611f",339,49952,false],
+  ["0x6448f4ad7a6577e66350e82798b9804a15949862",337,53356,false],
+  ["0x76e4259c86c4ad63fc72bee66f8569a8ae3bdc0d",335,45435,false],
+  ["0xf04080f8537ea9b974fe917af42220ded298e645",335,40761,false],
+  ["0x505f98cd2fcfad9f07c67cca4cb33b99d177af3a",323,44491,false],
+  ["0xd48140f9b0e58d717f7f66ba86f77a620821cd6d",320,45431,false],
+  ["0xaea8609c63a4e9602a743c793431f6b369cde47c",309,46794,false],
+  ["0x56a0165674467fd3c1a200745a71d27de0325efe",304,48616,false],
+  ["0x6123c970e5ff19b4345c12e5562cb7bfe220f9c2",297,36637,false],
+  ["0x62a1324cbe32059d8767d4ec807422d45bab213c",293,7447,false],
+  ["0xba5ca6cb8534266d1e99d6f49b7223d22d79adbb",286,37506,false],
+  ["0x597f35cb4876f8600df4d6d8c380f05d11320b61",282,32736,false],
+  ["0x2d99531f4a0571d60680359d0427dcc1bc3919b2",281,38662,false],
+  ["0x5fa72ef50a4f38a22838661c479518d18349a7be",277,32670,false],
+  ["0xae1cab5c9a258a3f55130dfb07b4a924f40f2778",270,30153,false],
+];
+
+const totalVol = 1500278, totalTx = 36824;
+function fmt(n){ return n >= 1000000 ? '$'+(n/1000000).toFixed(2)+'M' : n >= 1000 ? '$'+(n/1000).toFixed(0)+'K' : '$'+n.toLocaleString(); }
+function shortAddr(a){ return a.slice(0,10)+'…'+a.slice(-6); }
+
+document.addEventListener('DOMContentLoaded', function() {
+
+// ── DAILY BARS ────────────────────────────────────────────────────────────────
+const maxD = Math.max(...Object.values(daily));
+const dailyEl = document.getElementById('dailyBars');
+Object.entries(daily).forEach(([day, usd]) => {
+  const pct = Math.max(usd / maxD * 100, 0.3).toFixed(1);
+  const color = usd > 500000 ? 'var(--green2)' : usd > 20000 ? '#16855c' : '#0a4030';
+  const el = document.createElement('div');
+  el.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:8px;';
+  el.innerHTML = `
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;width:46px;color:var(--text3);flex-shrink:0;">${day}</span>
+    <div style="flex:1;height:24px;background:var(--bg);border-radius:4px;overflow:hidden;">
+      <div style="height:100%;width:${pct}%;background:${color};display:flex;align-items:center;padding-left:8px;transition:width 0.6s;">
+        ${usd > 8000 ? `<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#a0ffd0;font-weight:500;">${fmt(usd)}</span>` : ''}
+      </div>
+    </div>
+    ${usd <= 8000 ? `<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);">${fmt(usd)}</span>` : ''}
+  `;
+  dailyEl.appendChild(el);
+});
+
+// ── TIMELINE (price action tab) ───────────────────────────────────────────────
+const timelineEl = document.getElementById('timelineBars');
+const phases = [
+  {label:'09:00',usd:445807,note:'Bot start · $446K',color:'var(--green2)'},
+  {label:'10:00',usd:364484,note:'High activity · $364K',color:'var(--green2)'},
+  {label:'11:00',usd:200255,note:'Declining · $200K',color:'#16855c'},
+  {label:'12:00',usd:125969,note:'$126K',color:'#16855c'},
+  {label:'13:00',usd:99846, note:'$100K',color:'#0d5040'},
+  {label:'14:00',usd:87117, note:'$87K',color:'#0d5040'},
+  {label:'15:00',usd:26957, note:'$27K',color:'#0a3528'},
+  {label:'16:00',usd:6647,  note:'$6.6K',color:'var(--amber2)'},
+  {label:'17:00',usd:5560,  note:'$5.6K',color:'var(--red2)'},
+  {label:'18–23',usd:13140, note:'$13K',color:'var(--bg4)'},
+];
+const maxT = 445807;
+phases.forEach(p => {
+  const pct = Math.max(p.usd / maxT * 100, 0.5).toFixed(1);
+  const el = document.createElement('div');
+  el.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:8px;';
+  el.innerHTML = `
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;width:54px;color:var(--text3);flex-shrink:0;">${p.label}</span>
+    <div style="flex:1;height:26px;background:var(--bg);border-radius:4px;overflow:hidden;">
+      <div style="height:100%;width:${pct}%;background:${p.color};display:flex;align-items:center;padding-left:8px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,0.7);">${p.note}</span>
+      </div>
+    </div>
+  `;
+  timelineEl.appendChild(el);
+});
+
+// ── TOP 20 VOL TABLE ──────────────────────────────────────────────────────────
+const volEl = document.getElementById('volRows');
+top20vol.forEach(([addr, usd, txs], i) => {
+  const r = document.createElement('div');
+  r.className = 'tbl-row';
+  r.style.gridTemplateColumns = '32px 2fr 1fr 1fr 1fr';
+  r.title = addr;
+  r.innerHTML = `
+    <span style="color:var(--text3)">${i+1}</span>
+    <span class="addr">${shortAddr(addr)}</span>
+    <span style="text-align:right;font-weight:500;color:var(--text);">$${usd.toLocaleString()}</span>
+    <span style="text-align:right;color:var(--text2);">${txs}</span>
+    <span style="text-align:right;color:var(--text3);">${(usd/totalVol*100).toFixed(1)}%</span>
+  `;
+  volEl.appendChild(r);
+});
+
+// ── TOP 20 TX TABLE ───────────────────────────────────────────────────────────
+const txEl = document.getElementById('txRows');
+top20tx.forEach(([addr, cnt, vol, isRouter], i) => {
+  const r = document.createElement('div');
+  r.className = 'tbl-row';
+  r.style.gridTemplateColumns = '32px 2fr 1fr 1fr 1fr';
+  r.title = addr;
+  r.innerHTML = `
+    <span style="color:var(--text3)">${i+1}</span>
+    <span class="addr">${shortAddr(addr)}${isRouter ? '<span class="router-badge">router</span>' : ''}</span>
+    <span style="text-align:right;font-weight:500;color:var(--text);">${cnt.toLocaleString()}</span>
+    <span style="text-align:right;color:var(--text2);">$${vol.toLocaleString()}</span>
+    <span style="text-align:right;color:var(--text3);">${(cnt/totalTx*100).toFixed(1)}%</span>
+  `;
+  txEl.appendChild(r);
+});
+
+}); // end DOMContentLoaded
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
